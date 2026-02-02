@@ -250,7 +250,7 @@
    
 
     // ====== Herzchen-Background ======
-    function spawnHearts(count=11){
+    function spawnHearts(count=15){
       for(let i=0;i<count;i++){
         const h = document.createElement("div");
         h.className = "heart";
@@ -265,11 +265,11 @@
       }
     }
     function burstHearts(){
-      spawnHearts(40;
+      spawnHearts(16);
     }
     // gentle continuous hearts
     spawnHearts(9);
-    setInterval(() => spawnHearts(8), 2500);
+    setInterval(() => spawnHearts(12), 2200);
   </script>
 </body>
 </html>
