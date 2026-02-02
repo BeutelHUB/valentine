@@ -250,7 +250,7 @@
    
 
     // ====== Herzchen-Background ======
-    function spawnHearts(count=9){
+    function spawnHearts(count=11){
       for(let i=0;i<count;i++){
         const h = document.createElement("div");
         h.className = "heart";
@@ -261,15 +261,15 @@
         h.style.background = Math.random() < 0.5 ? "#ff3b6b" : "#ff6fa1";
         document.body.appendChild(h);
         // cleanup later
-        setTimeout(() => h.remove(), 18000);
+        setTimeout(() => h.remove(), 23000);
       }
     }
     function burstHearts(){
-      spawnHearts(10;
+      spawnHearts(40;
     }
     // gentle continuous hearts
     spawnHearts(9);
-    setInterval(() => spawnHearts(4), 2200);
+    setInterval(() => spawnHearts(8), 2500);
   </script>
 </body>
 </html>
