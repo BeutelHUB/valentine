@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Willst du mein Valentin sein? 💌</title>
+  <style>
+    :root{
+      --bg1:#ffdde1;
+      --bg2:#ee9ca7;
+      --card:#ffffffcc;
+      --text:#2b2b2b;
+      --accent:#ff3b6b;
+      --accent2:#ff6fa1;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 20% 10%, var(--bg1), transparent 60%),
+                  radial-gradient(1200px 800px at 80% 90%, var(--bg2), transparent 55%),
+                  linear-gradient(135deg, #fff 0%, #ffe8ef 40%, #ffd3df 100%);
+      overflow:hidden;
+      padding:24px;
+    }
+
+    .card{
+      width:min(720px, 100%);
+      background:var(--card);
+      backdrop-filter: blur(10px);
+      border: 1px solid #ffffff88;
+      border-radius: 24px;
+      box-shadow: 0 18px 60px #0000001a;
+      padding: 28px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:#ffffffb3;
+      border:1px solid #ffffffaa;
+      font-weight:600;
+      letter-spacing:.2px;
+    }
+
+    h1{
+      margin:16px 0 8px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height:1.08;
+    }
+
+    p{
+      margin:0;
+      font-size: clamp(16px, 2.2vw, 18px);
+      line-height:1.6;
+      opacity:.92;
+    }
+
+    .name{
+      color:var(--accent);
+      font-weight:800;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:22px;
+    }
+
+    button{
+      border:0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size:16px;
+      cursor:pointer;
+      transition: transform .06s ease, filter .2s ease;
+      font-weight:700;
+    }
+    button:active{ transform: translateY(1px) scale(.99); }
+
+    .yes{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color:white;
+      box-shadow: 0 10px 30px #ff3b6b3d;
+    }
+    .maybe{
+      background:#ffffff;
+      color:var(--text);
+      border:1px solid #00000012;
+    }
+
+    .footer{
+      margin-top:18px;
+      font-size: 13px;
+      opacity:.7;
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      place-items:center;
+      background:#00000055;
+      padding:18px;
+    }
+    .modal.open{display:grid;}
+    .modal-card{
+      width:min(560px, 100%);
+      background:#fff;
+      border-radius: 22px;
+      padding: 20px 20px 18px;
+      box-shadow: 0 22px 70px #0000003a;
+      border: 1px solid #00000010;
+    }
+    .modal-card h2{
+      margin:0 0 10px;
+      font-size: 26px;
+    }
+    .modal-card p{ margin:0 0 14px; }
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+    .close{
+      background:#f2f2f2;
+      color:#333;
+    }
+
+    /* floating hearts */
+    .heart{
+      position:absolute;
+      left:var(--x);
+      top:110%;
+      width:18px;
+      height:18px;
+      transform: rotate(45deg);
+      background: var(--accent);
+      opacity:.22;
+      animation: floatUp var(--d) linear infinite;
+      filter: blur(.1px);
+    }
+    .heart::before,.heart::after{
+      content:"";
+      position:absolute;
+      width:18px;height:18px;
+      background:inherit;
+      border-radius:50%;
+    }
+    .heart::before{ left:-9px; top:0; }
+    .heart::after{ left:0; top:-9px; }
+
+    @keyframes floatUp{
+      from{ transform: translateY(0) rotate(45deg) scale(var(--s)); }
+      to{ transform: translateY(-140vh) rotate(45deg) scale(var(--s)); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="badge">💌 Frage an dich</div>
+
+    <h1>
+      Hey <span class="name" id="herName">[Name]</span>…<br />
+      willst du mein Valentin sein? 💘
+    </h1>
+
+    <p id="message">
+      Ich mag dich wirklich sehr und ich würde den Valentinstag gerne mit dir verbringen.
+      Wenn du „Ja“ klickst, verspreche ich: Ich mache es zu einem richtig schönen Tag. ✨
+    </p>
+
+    <div class="actions">
+      <button class="yes" id="yesBtn">Ja 🥰</button>
+      <button class="maybe" id="maybeBtn">Vielleicht später (21.02)🙂</button>
+    </div>
+
+    <div class="footer">
+      Ich hab dich gern. ❤️, dein Maxi
+    </div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <h2 id="modalTitle">Yeees! 💖</h2>
+      <p id="modalText">
+        Das macht mich gerade extrem glücklich.  
+        Schreib mir kurz zurück dann plane ich den Rest. 😊
+      </p>
+      <div class="modal-actions">
+        <button class="close" id="closeBtn">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ====== PERSONALISIEREN ======
+    const SETTINGS = {
+      name: "Annika", 
+      message:
+        "Ich mag dich wirklich sehr und ich würde den Valentinstag gerne mit dir verbringen. Wenn du „Ja“ klickst, verspreche ich: Ich mache es zu einem richtig schönen Tag. ✨",
+      yesTitle: "Yeees! 💖",
+      yesText:
+        "Das macht mich gerade extrem glücklich.\nSchreib mir kurz zurück oder schick mir ein ❤️ dann plane ich den Rest. 😊",
+      maybeTitle: "Alles gut 🙂",
+      maybeText:
+        "Kein Stress. Ich mag dich trotzdem sehr. \nWenn du willst, sag mir einfach, wann du bereit bist. 💗",
+    };
+
+    // Apply text
+    document.getElementById("herName").textContent = SETTINGS.name;
+    document.getElementById("message").textContent = SETTINGS.message;
+
+    // Modal helpers
+    const modal = document.getElementById("modal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalText = document.getElementById("modalText");
+
+    function openModal(title, text){
+      modalTitle.textContent = title;
+      modalText.textContent = text;
+      modal.classList.add("open");
+    }
+    function closeModal(){ modal.classList.remove("open"); }
+
+    document.getElementById("yesBtn").addEventListener("click", () => {
+      openModal(SETTINGS.yesTitle, SETTINGS.yesText);
+      burstHearts();
+    });
+
+    document.getElementById("maybeBtn").addEventListener("click", () => {
+      openModal(SETTINGS.maybeTitle, SETTINGS.maybeText);
+    });
+
+    document.getElementById("closeBtn").addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
+
+   
+
+    // ====== Herzchen-Background ======
+    function spawnHearts(count=18){
+      for(let i=0;i<count;i++){
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.style.setProperty("--x", (Math.random()*100)+"%");
+        h.style.setProperty("--d", (8+Math.random()*10)+"s");
+        h.style.setProperty("--s", (0.6+Math.random()*1.2));
+        h.style.opacity = (0.12+Math.random()*0.22);
+        h.style.background = Math.random() < 0.5 ? "#ff3b6b" : "#ff6fa1";
+        document.body.appendChild(h);
+        // cleanup later
+        setTimeout(() => h.remove(), 22000);
+      }
+    }
+    function burstHearts(){
+      spawnHearts(26);
+    }
+    // gentle continuous hearts
+    spawnHearts(18);
+    setInterval(() => spawnHearts(6), 2500);
+  </script>
+</body>
+</html>
